@@ -1,8 +1,8 @@
 export * from '@mysten/sui/utils';
 export * from '@mysten/sui/transactions';
-export { SuiKit } from './suiKit';
-export { SuiAccountManager } from './libs/suiAccountManager';
-export { SuiTxBlock } from './libs/suiTxBuilder';
-export { MultiSigClient } from './libs/multiSig';
-export { SuiInteractor } from './libs/suiInteractor';
-export type * from './types';
+export { SuiKit } from './kits/suiKit';
+export type * from './kits/types';
+export { SuiAccountManager } from './kits/suiAccountManager';
+export { SuiTxBlock } from './kits/suiTxBuilder';
+export { MultiSigClient } from './kits/multiSig';
+export { SuiInteractor } from './kits/suiInteractor';

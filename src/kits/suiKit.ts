@@ -3,16 +3,16 @@
  */
 import { getFullnodeUrl } from '@mysten/sui/client';
 import { Transaction } from '@mysten/sui/transactions';
-import { SuiAccountManager } from './libs/suiAccountManager';
-import { SuiTxBlock } from './libs/suiTxBuilder';
-import { SuiInteractor } from './libs/suiInteractor';
+import { SuiAccountManager } from './suiAccountManager';
+import { SuiTxBlock } from './suiTxBuilder';
+import { SuiInteractor } from './suiInteractor';
 import type {
   SuiTransactionBlockResponse,
   DevInspectResults,
   SuiObjectDataOptions,
   DryRunTransactionBlockResponse,
 } from '@mysten/sui/client';
-import type { SuiSharedObject, SuiOwnedObject } from './libs/suiModel';
+import type { SuiSharedObject, SuiOwnedObject } from './suiModel';
 import type {
   SuiKitParams,
   DerivePathParams,

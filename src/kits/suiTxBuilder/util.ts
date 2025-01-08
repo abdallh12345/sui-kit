@@ -18,7 +18,7 @@ import type {
   SuiVecTxArg,
   SuiInputTypes,
   SuiAmountsArg,
-} from 'src/types';
+} from '../types';
 import type { SuiObjectRef } from '@mysten/sui/client';
 
 export const getDefaultSuiInputType = (
