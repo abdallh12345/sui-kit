@@ -42,7 +42,7 @@ export const getDefaultSuiInputType = (
  * @param arg
  * @returns boolean.
  */
-function isAmountArg(arg: any): arg is bigint | number | string {
+function isAmountArg(arg: unknown): arg is bigint | number | string {
   return (
     typeof arg === 'number' ||
     typeof arg === 'bigint' ||

@@ -6,6 +6,7 @@ node_modules/
 # build / generate output
 dist/
 docs/
+*/**/build
 
 #misc
 .DS_Store

@@ -1,7 +1,9 @@
 {
   "name": "@scallop-io/sui-kit",
-  "version": "1.18.0",
+  "author": "Scallop Labs <team@scallop.io>",
   "description": "Tookit for interacting with SUI network",
+  "version": "1.18.0-experimental.1",
+  "license": "Apache-2.0",
   "keywords": [
     "sui",
     "scallop labs",
@@ -9,49 +11,50 @@
     "blockchain",
     "sui-kit"
   ],
-  "author": "team@scallop.io",
   "homepage": "https://github.com/scallop-io/sui-kit#readme",
   "bugs": "https://github.com/scallop-io/sui-kit/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/scallop-io/sui-kit.git"
   },
-  "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
+  "sideEffects": false,
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "clean": "rm -rf tsconfig.tsbuildinfo ./dist",
     "build": "npm run build:types && npm run build:tsup",
-    "build:tsup": "tsup ./src/index.ts --format esm,cjs --sourcemap",
+    "build:tsup": "tsup",
     "build:types": "tsc --build",
-    "watch:tsup": "tsup ./src/index.ts --format esm,cjs --clean --splitting --watch",
-    "watch:types": "tsc --watch",
     "watch": "pnpm run clean & pnpm run watch:types & pnpm run watch:tsup",
-    "test": "pnpm test:typecheck && pnpm test:unit",
-    "test:typecheck": "tsc -p ./test",
+    "watch:tsup": "tsup --splitting --watch",
+    "watch:types": "tsc --watch",
+    "test": "pnpm test:types && pnpm test:unit",
+    "test:types": "tsc -p ./test",
     "test:unit": "vitest run --test-timeout=60000",
     "test:watch": "vitest",
-    "format:fix": "prettier --ignore-path 'dist/* docs/*' --write '**/*.{ts,json,md}'",
-    "lint:fix": "eslint . --ignore-pattern dist --ext .ts --fix",
-    "prepare": "husky install",
+    "format:fix": "prettier --write '**/*.{mts,mjs,ts,json,md}' '!dist/*' '!docs/*'",
+    "lint:fix": "eslint .",
+    "prepare": "husky && echo 'npx lint-staged' > .husky/pre-commit",
     "commit": "commit",
     "release": "standard-version -f",
     "release:major": "standard-version -r major",
@@ -67,33 +70,36 @@
     "@scure/bip39": "^1.3.0",
     "assert": "^2.1.0",
     "bech32": "^2.0.0",
-    "superstruct": "^1.0.3",
-    "ts-retry-promise": "^0.7.1",
+    "tmp": "^0.2.3",
+    "ts-retry-promise": "^0.8.1",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.0.0",
-    "@commitlint/config-conventional": "^18.0.0",
-    "@commitlint/prompt-cli": "^18.0.0",
-    "@types/node": "^20.8.7",
-    "@types/tmp": "^0.2.5",
-    "@typescript-eslint/eslint-plugin": "^8.11.0",
-    "@typescript-eslint/parser": "8.10.0",
-    "dotenv": "^16.3.1",
-    "eslint": "^8.52.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.0.2",
-    "prettier": "^3.0.3",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/prompt-cli": "^19.6.0",
+    "@types/node": "^22.10.5",
+    "@types/tmp": "^0.2.6",
+    "dotenv": "^16.4.7",
+    "@eslint/compat": "^1.2.4",
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.2",
     "standard-version": "^9.5.0",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "tsup": "^7.2.0",
-    "typedoc": "^0.25.2",
-    "typescript": "5.5.4",
-    "valibot": "^0.36.0",
-    "vitest": "^0.34.6"
+    "tsup": "^8.3.5",
+    "typedoc": "^0.27.6",
+    "typescript": "5.7.2",
+    "typescript-eslint": "^8.19.1",
+    "valibot": "0.42.1",
+    "vitest": "^2.1.8"
   },
   "lint-staged": {
     "**/*.ts": [
@@ -124,36 +130,5 @@
     "bracketSpacing": true,
     "arrowParens": "always",
     "endOfLine": "lf"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "browser": true,
-      "node": true,
-      "es2022": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:prettier/recommended"
-    ],
-    "plugins": [
-      "@typescript-eslint",
-      "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "rules": {
-      "prettier/prettier": "warn",
-      "@typescript-eslint/no-explicit-any": "off",
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "caughtErrorsIgnorePattern": "^_"
-        }
-      ]
-    }
   }
 }
